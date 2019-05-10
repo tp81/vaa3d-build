@@ -10,8 +10,17 @@ pool:
   vmImage: 'vs2015-win2012r2'
 
 steps:
-- script: echo Hello, world!
-  displayName: 'Run a one-line script'
+- powershell: |
+    Invoke-WebRequest -Uri https://downloads.sourceforge.net/project/boost/boost-binaries/1.61.0/boost_1_61_0-msvc-12.0-64.exe?r=https%3A%2F%2Fsourceforge.net%2Fprojects%2Fboost%2Ffiles%2Fboost-binaries%2F1.61.0%2Fboost_1_61_0-msvc-12.0-64.exe%2Fdownload -OutFile boost.exe
+    & boost.exe /silent /norestart
+  displayName: 'Download and install BOOST'
+
+- powershell: |
+    Invoke-WebRequest -Uri https://storage.googleapis.com/google-code-archive-downloads/v2/code.google.com/qt-msvc-installer/qt-win64-opensource-4.8.4-noqt3-vs2008.exe -OutFile qt-win64-opensource-4.8.4-noqt3-vs2008.exe
+    Invoke-WebRequest -Uri https://storage.googleapis.com/google-code-archive-downloads/v2/code.google.com/qt-msvc-installer/qt-win64-opensource-4.8.4-noqt3-vs2008-1.bin -OutFile qt-win64-opensource-4.8.4-noqt3-vs2008-1.bin
+    Invoke-WebRequest -Uri https://storage.googleapis.com/google-code-archive-downloads/v2/code.google.com/qt-msvc-installer/qt-win64-opensource-4.8.4-noqt3-vs2008-2.bin -OutFile qt-win64-opensource-4.8.4-noqt3-vs2008-2.bin
+    & qt-win64-opensource-4.8.4-noqt3-vs2008.exe /silent /norestart
+  displayName: "Download and install QT"
 
 - script: |
     echo Add other tasks to build, test, and deploy your project.
